@@ -10,7 +10,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace Bannerlord.Lua
 {
-    public class SubModuleLua : MBSubModuleBase
+    internal class SubModuleLua : MBSubModuleBase
     {
         static SubModuleLua()
         {

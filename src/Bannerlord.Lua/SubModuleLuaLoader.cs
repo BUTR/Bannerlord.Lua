@@ -5,6 +5,20 @@ using System.IO;
 
 namespace Bannerlord.Lua
 {
+    // Ideally, we should use BUTRLoader to make Lua SubModules
+    // first class citizens, plus add support for SubModuleLua XML tag
+    // instead of doing hardcoding.
+    //
+    //
+    // Basically, there should be this hierarchy:
+    //
+    // * BUTRLoader exposes an interface to add support of Lua SubModules with the
+    // custom SubModuleLua XML tag that adds them like the C# SubModules to the game
+    //
+    // * Bannerlord.Lua distributes MoonSharp and implements the interface for BUTRLoader to use
+    //
+    // * Bannerlord.LuaExample exposes the SubModules.xml and the %LUA% folder
+    // and Bannerlord.Lua manages the mod via the BUTRLoader interface
     public class SubModuleLuaLoader : MBSubModuleBaseListWrapper
     {
         public SubModuleLuaLoader()
