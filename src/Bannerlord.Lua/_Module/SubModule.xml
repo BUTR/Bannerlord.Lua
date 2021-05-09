@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <Name value="$modulename$" />
+  <Id value="$modulename$" />
+  <Version value="v$version$" />
+  <Official value="false" />
+  <DefaultModule value="false" />
+  <SingleplayerModule value="true" />
+  <MultiplayerModule value="false" />
+  <!-- Prototype -->
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Native" order="LoadAfterThis" optional="true" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" optional="true" />
+    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" optional="true" />
+    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" optional="true" />
+    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" optional="true" />
+  </DependedModuleMetadatas>
+  <!-- Prototype -->
+  <SubModules>
+    <SubModule>
+      <Name value="$modulename$" />
+      <DLLName value="$modulename$.dll" />
+      <SubModuleClassType value="$modulename$.SubModuleLuaLoader" />
+      <Tags />
+    </SubModule>
+  </SubModules>
+</Module>
