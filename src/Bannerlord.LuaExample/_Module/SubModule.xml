@@ -9,12 +9,17 @@
   <MultiplayerModule value="false" />
   <DependedModules>
     <DependedModule Id="Bannerlord.Lua" />
-    <DependedModule Id="Native" />
-    <DependedModule Id="SandBoxCore" />
-    <DependedModule Id="Sandbox" />
-    <DependedModule Id="StoryMode" />
-    <DependedModule Id="CustomBattle" />
   </DependedModules>
+  <!-- Prototype -->
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Native" order="LoadBeforeThis" optional="true" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadBeforeThis" optional="true" />
+    <DependedModuleMetadata id="Sandbox" order="LoadBeforeThis" optional="true" />
+    <DependedModuleMetadata id="StoryMode" order="LoadBeforeThis" optional="true" />
+    <DependedModuleMetadata id="CustomBattle" order="LoadBeforeThis" optional="true" />
+  </DependedModuleMetadatas>
+  <!-- Prototype -->
   <SubModules>
     <SubModuleLua>
       <Name value="$modulename$" />
