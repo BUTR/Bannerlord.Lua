@@ -57,4 +57,26 @@
   <ItemGroup>
     <ProjectReference Include="..\Bannerlord.Lua\Bannerlord.Lua.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuildCopyToModules2" AfterTargets="PostBuildCopyToModules" Condition="$(ModuleName) != '' AND Exists($(GameFolder))">
+    <DeleteFolder DirectoryPath="$(GameFolder)/Modules/$(ModuleName)/bin"/>
+  </Target>
+
+  <UsingTask
+    TaskName="DeleteFolder"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <DirectoryPath ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            var di = new System.IO.DirectoryInfo(DirectoryPath);
+            di.Delete(true);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
 </Project>
