@@ -1,5 +1,5 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.BUTR.Shared.ModuleInfoExtended;
+using Bannerlord.Lua.Utils;
 
 using MoonSharp.Interpreter;
 
@@ -37,18 +37,18 @@ namespace Bannerlord.Lua
             }
         }
 
-        internal SubModuleLua(ModuleInfo2 moduleInfo)
+        internal SubModuleLua(string moduleFolder, string scriptName, string subModuleClassType)
         {
             _subModuleScript = new Script();
             _subModuleScript.Globals["base"] = new EmptySubModule();
 
-            var subModuleFilePath = Path.Combine(moduleInfo.Folder, "Lua", "SubModule.lua");
+            var subModuleFilePath = Path.Combine(moduleFolder, "Lua", scriptName);
             if (File.Exists(subModuleFilePath))
             {
                 _subModuleScript.DoString(File.ReadAllText(subModuleFilePath));
             }
 
-            _subModule = _subModuleScript.Globals?["SubModule"] as Table;
+            _subModule = _subModuleScript.Globals?[subModuleClassType] as Table;
         }
 
         protected override void OnSubModuleLoad()
@@ -57,7 +57,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnSubModuleLoad"] is Closure closure)
             {
-                closure.Call();
+                _subModuleScript.Call(closure);
             }
         }
 
@@ -67,7 +67,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnSubModuleUnloaded"] is Closure closure)
             {
-                closure.Call();
+                _subModuleScript.Call(closure);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnApplicationTick"] is Closure closure)
             {
-                closure.Call(dt);
+                _subModuleScript.Call(closure, dt);
             }
         }
 
@@ -87,7 +87,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnBeforeInitialModuleScreenSetAsRoot"] is Closure closure)
             {
-                closure.Call();
+                _subModuleScript.Call(closure);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnGameStart"] is Closure closure)
             {
-                closure.Call(game, gameStarterObject);
+                _subModuleScript.Call(closure, game, gameStarterObject);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Bannerlord.Lua
         {
             if (_subModule?["OnServiceRegistration"] is Closure closure)
             {
-                closure.Call();
+                _subModuleScript.Call(closure);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Bannerlord.Lua
             if (!base.DoLoading(game))
                 return false;
 
-            if (_subModule?["DoLoading"] is Closure closure && closure.Call(game) is { Type: DataType.Boolean } dynValue)
+            if (_subModule?["DoLoading"] is Closure closure && _subModuleScript.Call(closure, game) is { Type: DataType.Boolean } dynValue)
             {
                 return dynValue.Boolean;
             }
@@ -130,7 +130,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnGameLoaded"] is Closure closure)
             {
-                closure.Call(game, initializerObject);
+                _subModuleScript.Call(closure, game, initializerObject);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnCampaignStart"] is Closure closure)
             {
-                closure.Call(game, starterObject);
+                _subModuleScript.Call(closure, game, starterObject);
             }
         }
 
@@ -150,7 +150,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["BeginGameStart"] is Closure closure)
             {
-                closure.Call(game);
+                _subModuleScript.Call(closure, game);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnGameEnd"] is Closure closure)
             {
-                closure.Call(game);
+                _subModuleScript.Call(closure, game);
             }
         }
 
@@ -170,7 +170,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnGameInitializationFinished"] is Closure closure)
             {
-                closure.Call(game);
+                _subModuleScript.Call(closure, game);
             }
         }
 
@@ -180,7 +180,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnMissionBehaviourInitialize"] is Closure closure)
             {
-                closure.Call(mission);
+                _subModuleScript.Call(closure, mission);
             }
         }
 
@@ -190,7 +190,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnMultiplayerGameStart"] is Closure closure)
             {
-                closure.Call(game, starterObject);
+                _subModuleScript.Call(closure, game, starterObject);
             }
         }
 
@@ -200,7 +200,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnNewGameCreated"] is Closure closure)
             {
-                closure.Call(game, initializerObject);
+                _subModuleScript.Call(closure, game, initializerObject);
             }
         }
 
@@ -210,7 +210,7 @@ namespace Bannerlord.Lua
 
             if (_subModule?["OnConfigChanged"] is Closure closure)
             {
-                closure.Call();
+                _subModuleScript.Call(closure);
             }
         }
     }

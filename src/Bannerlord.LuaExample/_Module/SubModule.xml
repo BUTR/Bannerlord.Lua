@@ -17,6 +17,7 @@
   </DependedModules>
   <SubModules>
     <SubModuleLua>
+      <Name value="$modulename$" />
       <ScriptName value="SubModule.lua" />
       <SubModuleClassType value="SubModule" />
       <Tags />

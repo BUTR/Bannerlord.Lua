@@ -2,5 +2,5 @@
 
 namespace Bannerlord.Lua
 {
-    internal class EmptySubModule : MBSubModuleBase { }
+    public class SubModule : MBSubModuleBase { }
 }

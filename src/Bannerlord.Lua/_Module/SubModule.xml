@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Module>
-  <Name value="$modulename$" />
+  <Name value="Lua Support" />
   <Id value="$modulename$" />
   <Version value="v$version$" />
   <Official value="false" />
   <DefaultModule value="false" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" />
+  </DependedModules>
   <!-- Prototype -->
   <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" />
     <DependedModuleMetadata id="Native" order="LoadAfterThis" optional="true" />
     <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" optional="true" />
     <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" optional="true" />
@@ -20,8 +24,11 @@
     <SubModule>
       <Name value="$modulename$" />
       <DLLName value="$modulename$.dll" />
-      <SubModuleClassType value="$modulename$.SubModuleLuaLoader" />
-      <Tags />
+      <SubModuleClassType value="$modulename$.SubModule" />
+      <Assemblies>
+        <Assembly value="MoonSharp.Interpreter.dll"/>
+      </Assemblies>
+      <Tags/>
     </SubModule>
   </SubModules>
 </Module>
