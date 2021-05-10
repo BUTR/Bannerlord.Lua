@@ -9,9 +9,5 @@ namespace Bannerlord.Lua.Utils
         private class EmptySubModuleImpl : MBSubModuleBase { }
 
         public EmptySubModule() : base(new EmptySubModuleImpl()) { }
-        protected override void OnSubModuleLoad()
-        {
-            OnSubModuleLoad();
-        }
     }
 }

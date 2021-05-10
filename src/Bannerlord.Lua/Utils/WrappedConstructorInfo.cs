@@ -31,8 +31,8 @@ namespace Bannerlord.Lua.Utils
             _constructorInfoImplementation.Invoke(obj, invokeAttr, binder, parameters, culture);
 
         public override string Name => _constructorInfoImplementation.Name;
-        public override Type DeclaringType => _constructorInfoImplementation.DeclaringType;
-        public override Type ReflectedType => _constructorInfoImplementation.ReflectedType;
+        public override Type? DeclaringType => _constructorInfoImplementation.DeclaringType;
+        public override Type? ReflectedType => _constructorInfoImplementation.ReflectedType;
         public override RuntimeMethodHandle MethodHandle => _constructorInfoImplementation.MethodHandle;
         public override MethodAttributes Attributes => _constructorInfoImplementation.Attributes;
 

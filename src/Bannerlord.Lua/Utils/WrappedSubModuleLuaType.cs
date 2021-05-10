@@ -21,9 +21,10 @@ namespace Bannerlord.Lua.Utils
             _subModuleClassType = subModuleClassType;
         }
 
-        private ConstructorInfo GetWrappedConstructor()
+        private ConstructorInfo? GetWrappedConstructor()
         {
             var constructorInfo = AccessTools2.Constructor(typeof(SubModuleLua), new[] {typeof(string), typeof(string), typeof(string)});
+            if (constructorInfo is null) return null;
             return new WrappedConstructorInfo(constructorInfo, new object[] {_moduleFolder, _scriptName, _subModuleClassType});
         }
 
@@ -32,7 +33,7 @@ namespace Bannerlord.Lua.Utils
         public override ConstructorInfo[] GetConstructors(BindingFlags bindingAttr) => _typeImplementation.GetConstructors(bindingAttr);
         public override Type GetInterface(string name, bool ignoreCase) => _typeImplementation.GetInterface(name, ignoreCase);
         public override Type[] GetInterfaces() => _typeImplementation.GetInterfaces();
-        public override EventInfo GetEvent(string name, BindingFlags bindingAttr) => _typeImplementation.GetEvent(name, bindingAttr);
+        public override EventInfo? GetEvent(string name, BindingFlags bindingAttr) => _typeImplementation.GetEvent(name, bindingAttr);
         public override EventInfo[] GetEvents(BindingFlags bindingAttr) => _typeImplementation.GetEvents(bindingAttr);
         public override Type[] GetNestedTypes(BindingFlags bindingAttr) => _typeImplementation.GetNestedTypes(bindingAttr);
         public override Type GetNestedType(string name, BindingFlags bindingAttr) => _typeImplementation.GetNestedType(name, bindingAttr);
@@ -44,7 +45,7 @@ namespace Bannerlord.Lua.Utils
         protected override MethodInfo? GetMethodImpl(string name, BindingFlags bindingAttr, Binder binder, CallingConventions callConvention, Type[] types, ParameterModifier[] modifiers)
             => _typeImplementation.GetMethod(name, bindingAttr, binder, callConvention, types, modifiers);
         public override MethodInfo[] GetMethods(BindingFlags bindingAttr) => _typeImplementation.GetMethods(bindingAttr);
-        public override FieldInfo GetField(string name, BindingFlags bindingAttr) => _typeImplementation.GetField(name, bindingAttr);
+        public override FieldInfo? GetField(string name, BindingFlags bindingAttr) => _typeImplementation.GetField(name, bindingAttr);
         public override FieldInfo[] GetFields(BindingFlags bindingAttr) => _typeImplementation.GetFields(bindingAttr);
         public override MemberInfo[] GetMembers(BindingFlags bindingAttr) => _typeImplementation.GetMembers(bindingAttr);
         protected override TypeAttributes GetAttributeFlagsImpl() => _typeImplementation.Attributes;
@@ -57,22 +58,23 @@ namespace Bannerlord.Lua.Utils
             => _typeImplementation.InvokeMember(name, invokeAttr, binder, target, args, modifiers, culture, namedParameters);
 
         public override Type UnderlyingSystemType => _typeImplementation.UnderlyingSystemType;
-        protected override ConstructorInfo? GetConstructorImpl(BindingFlags bindingAttr, Binder binder, CallingConventions callConvention, Type[] types, ParameterModifier[] modifiers)
+        protected override ConstructorInfo? GetConstructorImpl(BindingFlags bindingAttr, Binder? binder, CallingConventions callConvention, Type[] types, ParameterModifier[]? modifiers)
         {
-            if (types.Length == 0)
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.CreateInstance;
+            if (bindingAttr == flags && binder == null && types.Length == 0 && modifiers == null)
                 return GetWrappedConstructor();
             return _typeImplementation.GetConstructor(bindingAttr, binder, callConvention, types, modifiers);
         }
 
         public override string Name => _typeImplementation.Name;
         public override Guid GUID => _typeImplementation.GUID;
-        public override System.Reflection.Module Module => _typeImplementation.Module;
+        public override Module Module => _typeImplementation.Module;
         public override Assembly Assembly => _typeImplementation.Assembly;
         public override string? FullName => _typeImplementation.FullName;
         public override string? Namespace => _typeImplementation.Namespace;
         public override string? AssemblyQualifiedName => _typeImplementation.AssemblyQualifiedName;
         public override Type? BaseType => _typeImplementation.BaseType;
-        public override object[] GetCustomAttributes(Type attributeType, bool inherit) =>
-            _typeImplementation.GetCustomAttributes(attributeType, inherit);
+        public override object[] GetCustomAttributes(Type attributeType, bool inherit)
+            => _typeImplementation.GetCustomAttributes(attributeType, inherit);
     }
 }

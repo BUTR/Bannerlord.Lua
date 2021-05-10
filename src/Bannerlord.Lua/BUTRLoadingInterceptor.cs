@@ -16,12 +16,12 @@ namespace Bannerlord.Lua
     [BUTRLoaderInterceptor]
     public static class BUTRLoadingInterceptor
     {
-        private static AccessTools.FieldRef<Module, Dictionary<string, Type>>? _loadedSubModuleTypes =
+        private static readonly AccessTools.FieldRef<Module, Dictionary<string, Type>>? LoadedSubModuleTypes =
             AccessTools2.FieldRefAccess<Module, Dictionary<string, Type>>("_loadedSubmoduleTypes");
 
         public static void OnInitializeSubModulesPrefix()
         {
-            var loadedSubModuleTypes = _loadedSubModuleTypes(Module.CurrentModule);
+            var loadedSubModuleTypes = LoadedSubModuleTypes?.Invoke(Module.CurrentModule);
 
             foreach (var moduleInfo in ModuleInfoHelper.GetLoadedModules())
             {
@@ -38,7 +38,7 @@ namespace Bannerlord.Lua
                     var name = subModuleNode?.SelectSingleNode("Name")?.Attributes["value"]?.InnerText ?? string.Empty;
                     var scriptName = subModuleNode?.SelectSingleNode("ScriptName")?.Attributes["value"]?.InnerText ?? string.Empty;
                     var subModuleClassType = subModuleNode?.SelectSingleNode("SubModuleClassType")?.Attributes["value"]?.InnerText ?? string.Empty;
-                    loadedSubModuleTypes.Add(name, new WrappedSubModuleLuaType(moduleInfo.Folder, scriptName, subModuleClassType));
+                    loadedSubModuleTypes?.Add(name, new WrappedSubModuleLuaType(moduleInfo.Folder, scriptName, subModuleClassType));
                 }
             }
         }

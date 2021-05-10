@@ -18,7 +18,6 @@ namespace Bannerlord.ButterLib.SubModuleWrappers
         private delegate void OnApplicationTickDelegate(float dt);
         private delegate void OnServiceRegistrationDelegate();
 
-
         private OnSubModuleLoadDelegate? OnSubModuleLoadInstance { get; }
         private OnSubModuleUnloadedDelegate? OnSubModuleUnloadedInstance { get; }
         private OnBeforeInitialModuleScreenSetAsRootDelegate? OnBeforeInitialModuleScreenSetAsRootInstance { get; }

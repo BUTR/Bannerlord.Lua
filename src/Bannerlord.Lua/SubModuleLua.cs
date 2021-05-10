@@ -101,7 +101,6 @@ namespace Bannerlord.Lua
             }
         }
 
-
         public void OnServiceRegistration()
         {
             if (_subModule?["OnServiceRegistration"] is Closure closure)
@@ -109,7 +108,6 @@ namespace Bannerlord.Lua
                 closure.Call();
             }
         }
-
 
         public override bool DoLoading(Game game)
         {
