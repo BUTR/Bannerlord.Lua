@@ -2,16 +2,16 @@
 SubModule.__index = SubModule
 
 function SubModule:OnSubModuleLoad()
-    base:OnSubModuleLoad();
+    base:SubModuleLoad();
 
 end
 
 function SubModule:OnSubModuleUnloaded()
-    base:OnSubModuleUnloaded();
+    base:SubModuleUnloaded();
 
 end
 
 function SubModule:OnBeforeInitialModuleScreenSetAsRoot()
-    base:OnBeforeInitialModuleScreenSetAsRoot();
+    base:BeforeInitialModuleScreenSetAsRoot();
 
 end
