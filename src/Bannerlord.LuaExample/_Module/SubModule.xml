@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Module>
   <Name value="$modulename$" />
-  <Id value="$modulename$" />
+  <Id value="$moduleid$" />
   <Version value="v$version$" />
   <Official value="false" />
   <DefaultModule value="false" />
@@ -22,7 +22,7 @@
   <!-- Prototype -->
   <SubModules>
     <SubModuleLua>
-      <Name value="$modulename$" />
+      <Name value="$moduleid$" />
       <ScriptName value="SubModule.lua" />
       <SubModuleClassType value="SubModule" />
       <Tags />
